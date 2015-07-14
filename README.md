@@ -3,6 +3,8 @@ Bottom Tab Indicator，Tab Navigate
 
 底部导航tab控件
 
+<img src="https://raw.githubusercontent.com/halzhang/BottomTabIndicator/master/device-2015-07-14-163800.png" width="480"/>
+
 用法
 ----
 1、布局

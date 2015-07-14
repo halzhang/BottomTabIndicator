@@ -43,7 +43,7 @@ Bottom Tab Indicator，Tab Navigate
             indicator.setViewPager(viewPager, 0);
         }
 
-4、自定义Adapter，需要继承 BottomTabFragmentPagerAdapter 或者 BottomTabPagerAdapter
+4、自定义Adapter，需要继承 [BottomTabFragmentPagerAdapter](https://github.com/halzhang/BottomTabIndicator/blob/master/library/src/main/java/com/halzhang/android/library/BottomTabFragmentPagerAdapter.java) 或者 [BottomTabPagerAdapter](https://github.com/halzhang/BottomTabIndicator/blob/master/library/src/main/java/com/halzhang/android/library/BottomTabPagerAdapter.java)
 
         private class MyPagerAdapter extends BottomTabFragmentPagerAdapter {
 

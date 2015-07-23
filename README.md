@@ -81,6 +81,22 @@ Bottom Tab Indicator，Tab Navigate
             <item name="android:textColor">@color/tab_text_color</item>
         </style>
 
+Download
+-----
+
+    repositories {
+        maven {
+            url 'https://dl.bintray.com/halzhang/maven/'
+        }
+    }
+
+    ...
+
+    dependencies {
+        compile 'com.github.halzhang.android.library:bottom-tab-indicator:1.0.0'
+    }
+
+
 License
 -----
     Copyright 2015 Zhanghanguo

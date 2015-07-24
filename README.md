@@ -83,17 +83,19 @@ Bottom Tab Indicator，Tab Navigate
 
 Download
 -----
+Maven
 
-    repositories {
-        maven {
-            url 'https://dl.bintray.com/halzhang/maven/'
-        }
-    }
+    <dependency>
+        <groupId>com.github.halzhang</groupId>
+        <artifactId>bottom-tab-indicator</artifactId>
+        <version>1.0.0</version>
+        <type>aar</type>
+    </dependency>
 
-    ...
+Gradle
 
     dependencies {
-        compile 'com.github.halzhang.android.library:bottom-tab-indicator:1.0.0'
+        compile 'com.github.halzhang:bottom-tab-indicator:1.0.0'
     }
 
 

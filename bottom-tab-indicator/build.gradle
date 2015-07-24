@@ -4,7 +4,7 @@ ext {
     bintrayRepo = 'maven'
     bintrayName = 'bottom-tab-indicator'
 
-    publishedGroupId = 'com.github.halzhang.android.library'
+    publishedGroupId = 'com.github.halzhang'
     libraryName = 'BottomTabIndicator'
     artifact = 'bottom-tab-indicator'
 
@@ -47,5 +47,5 @@ dependencies {
     compile 'com.android.support:support-v4:22.2.0'
 }
 
-apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
-apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'
+//apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
+//apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'

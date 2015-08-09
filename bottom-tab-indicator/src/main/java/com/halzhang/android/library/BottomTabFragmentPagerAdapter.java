@@ -37,4 +37,13 @@ public abstract class BottomTabFragmentPagerAdapter extends FragmentPagerAdapter
     public int getPageIcon(int position) {
         return 0;
     }
+
+    /**
+     * 获取 tab id，用来设置给每个 tab 的viewId {@link android.view.View#setId(int)}
+     * @return tab id
+     * @see android.view.View#setId(int)
+     */
+    public int[] getTabViewIds(){
+        return null;
+    }
 }

@@ -44,6 +44,16 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
+        public int[] getTabViewIds() {
+            int[] ids = new int[4];
+            ids[0] = R.id.tab0;
+            ids[1] = R.id.tab1;
+            ids[2] = R.id.tab2;
+            ids[3] = R.id.tab3;
+            return ids;
+        }
+
+        @Override
         public CharSequence getPageTitle(int position) {
             return "Tab " + position;
         }

@@ -21,7 +21,9 @@ import android.os.Build;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -32,7 +34,10 @@ import android.widget.RadioGroup;
  */
 public class BottomTabIndicator extends RadioGroup implements ViewPager.OnPageChangeListener {
 
+    private static final String LOG_TAG = BottomTabIndicator.class.getSimpleName();
+
     private ViewPager mViewPager;
+    private int[] mTabViewIds;
 
     public BottomTabIndicator(Context context) {
         this(context, null);
@@ -45,7 +50,12 @@ public class BottomTabIndicator extends RadioGroup implements ViewPager.OnPageCh
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if (mViewPager != null) {
-                    mViewPager.setCurrentItem(checkedId);
+                    int currentItem = getPositionForViewId(checkedId);
+                    if (currentItem == mViewPager.getCurrentItem()) {
+                        return;
+                    }
+                    Log.i(LOG_TAG, "checkedId: " + checkedId + " Current item : " + currentItem);
+                    mViewPager.setCurrentItem(currentItem);
                 }
             }
         });
@@ -61,6 +71,19 @@ public class BottomTabIndicator extends RadioGroup implements ViewPager.OnPageCh
             removeAllViews();
             PagerAdapter adapter = mViewPager.getAdapter();
             int count = adapter.getCount();
+            if (count < 1) {
+                throw new RuntimeException("The adapter's count must be > 0");
+            }
+            int[] tabViewIds = getTabViewId(adapter);
+            if (tabViewIds == null) {
+                mTabViewIds = new int[count];
+                for (int i = 0; i < count; i++) {
+                    mTabViewIds[i] = i;
+                }
+            } else {
+                mTabViewIds = tabViewIds;
+                //TODO 校验长度是否和 count 一样
+            }
             for (int i = 0; i < count; i++) {
                 RadioButton radioButton = (RadioButton) LayoutInflater.from(getContext()).inflate(R.layout.tab_indicator, null);
                 int pageIcon = getPageIcon(adapter, i);
@@ -68,11 +91,21 @@ public class BottomTabIndicator extends RadioGroup implements ViewPager.OnPageCh
                     radioButton.setCompoundDrawablesWithIntrinsicBounds(null, getDrawable(getContext(), pageIcon), null, null);
                 }
                 radioButton.setText(adapter.getPageTitle(i));
-                radioButton.setId(i);
+                radioButton.setId(mTabViewIds[i]);
                 LayoutParams layoutParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1);
                 addView(radioButton, layoutParams);
             }
         }
+    }
+
+    private int getPositionForViewId(int viewId) {
+        for (int i = 0; i < mTabViewIds.length; i++) {
+            if (mTabViewIds[i] == viewId) {
+                return i;
+            }
+        }
+        Log.w(LOG_TAG, "Can not get position for viewId: " + viewId);
+        return 0;
     }
 
     private Drawable getDrawable(Context context, int resId) {
@@ -94,6 +127,19 @@ public class BottomTabIndicator extends RadioGroup implements ViewPager.OnPageCh
             return ((BottomTabFragmentPagerAdapter) adapter).getPageIcon(position);
         }
         return 0;
+    }
+
+    private int[] getTabViewId(PagerAdapter adapter) {
+        if (adapter == null) {
+            return null;
+        }
+        if (adapter instanceof BottomTabPagerAdapter) {
+            return ((BottomTabPagerAdapter) adapter).getTabViewIds();
+        }
+        if (adapter instanceof BottomTabFragmentPagerAdapter) {
+            return ((BottomTabFragmentPagerAdapter) adapter).getTabViewIds();
+        }
+        return null;
     }
 
     public void setViewPager(ViewPager viewPager) {
@@ -119,6 +165,7 @@ public class BottomTabIndicator extends RadioGroup implements ViewPager.OnPageCh
 
     /**
      * 设置ViewPager当前页
+     *
      * @param item
      */
     public void setCurrentItem(int item) {
@@ -137,7 +184,7 @@ public class BottomTabIndicator extends RadioGroup implements ViewPager.OnPageCh
 
     @Override
     public void onPageSelected(int position) {
-        check(position);
+        check(mTabViewIds[position]);
     }
 
     @Override

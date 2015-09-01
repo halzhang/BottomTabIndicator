@@ -1,3 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <declare-styleable name="BottomTabIndicator">
+        <!-- 切换是否有动画 -->
+        <attr name="smoothScroll" format="boolean"/>
+    </declare-styleable>
 </resources>

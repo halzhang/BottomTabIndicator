@@ -16,6 +16,7 @@
 package com.halzhang.android.library;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.v4.view.PagerAdapter;
@@ -46,6 +47,9 @@ public class BottomTabIndicator extends RadioGroup implements ViewPager.OnPageCh
     public BottomTabIndicator(Context context, AttributeSet attrs) {
         super(context, attrs);
         setOrientation(RadioGroup.HORIZONTAL);
+        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.BottomTabIndicator);
+        final boolean smoothScroll = typedArray.getBoolean(R.styleable.BottomTabIndicator_smoothScroll, true);
+        typedArray.recycle();
         setOnCheckedChangeListener(new OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -55,7 +59,7 @@ public class BottomTabIndicator extends RadioGroup implements ViewPager.OnPageCh
                         return;
                     }
                     Log.i(LOG_TAG, "checkedId: " + checkedId + " Current item : " + currentItem);
-                    mViewPager.setCurrentItem(currentItem);
+                    mViewPager.setCurrentItem(currentItem, smoothScroll);
                 }
             }
         });
